@@ -1,6 +1,26 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50 antialiased;
+    font-family: var(--font-sans);
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -162,22 +182,4 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
-}
-@layer base {
-  * {
-    @apply border-border outline-ring/50 antialiased;
-    font-family: var(--font-sans);
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
