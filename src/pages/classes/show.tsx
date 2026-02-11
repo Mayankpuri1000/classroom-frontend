@@ -9,7 +9,7 @@ import { AdvancedImage } from '@cloudinary/react';
 import { bannerPhoto } from '@/lib/cloudinary';
 
 
-const show = () => {
+const ClassesShow = () => {
 
     const { query } = useShow<ClassDetails>({ resource: 'classes' });
 
@@ -35,7 +35,7 @@ const show = () => {
         .map((part) => part[0].toUpperCase())
         .join('');
 
-    const placeholderUrl = `https://placehold.co/600*400?text=${encodeURIComponent(teacherInitials || 'NA')}`
+    const placeholderUrl = `https://placehold.co/600x400?text=${encodeURIComponent(teacherInitials || 'NA')}`
 
     const { name, bannerUrl, bannerCldPubId, description, capacity, status, teacher, department, subject } = classDetails;
 
@@ -76,7 +76,7 @@ const show = () => {
                     </div>
 
                     <div className="department">
-                        <p>Depaerment</p>
+                        <p>Department</p>
 
                         <div>
                             <p>{department?.name}</p>
@@ -118,4 +118,4 @@ const show = () => {
     )
 }
 
-export default show
+export default ClassesShow

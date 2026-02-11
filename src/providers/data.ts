@@ -91,7 +91,11 @@ const options: CreateDataProviderOptions = {
     mapResponse: async (response) => {
       const json: GetOneResponse = await response.clone().json();
 
-      return json.data ?? [];
+      if(!response.ok) {
+        throw await buildHttpError(response);
+      }
+
+      return json.data ?? null;
     }
   }
 }
