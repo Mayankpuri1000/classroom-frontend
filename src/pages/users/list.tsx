@@ -1,4 +1,4 @@
-import { ListView } from '@/components/refine-ui/views/list-view';
+import { ListView, ListViewHeader } from '@/components/refine-ui/views/list-view';
 import { DataTable } from '@/components/refine-ui/data-table/data-table';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -23,17 +23,18 @@ const UsersList = () => {
     const [search, setSearch] = useState('');
     const [roleFilter, setRoleFilter] = useState<string>('');
 
-    const filters = [];
-    if (search) filters.push({ field: 'search', operator: 'contains', value: search });
-    if (roleFilter) filters.push({ field: 'role', operator: 'eq', value: roleFilter });
+    const filters: any[] = [];
+    if (search) filters.push({ field: 'search', operator: 'contains' as const, value: search });
+    if (roleFilter) filters.push({ field: 'role', operator: 'eq' as const, value: roleFilter });
 
-    const { data: usersData, isLoading } = useList<User>({
+    const usersListResult = useList<User>({
         resource: 'users',
         filters,
-        pagination: { current: 1, pageSize: 20 }
+        pagination: { currentPage: 1, pageSize: 20 }
     });
 
-    const users = usersData?.data || [];
+    const users = (usersListResult.result?.data || []) as unknown as User[];
+    const isLoading = usersListResult.query.isLoading;
 
     const getRoleBadgeVariant = (role: string) => {
         switch (role) {
@@ -120,7 +121,8 @@ const UsersList = () => {
     });
 
     return (
-        <ListView title="Users" resource="users">
+        <ListView>
+            <ListViewHeader title="Users" resource="users" />
             <div className="intro-row">
                 <div className="search-field">
                     <Search className="search-icon" />
@@ -155,7 +157,7 @@ const UsersList = () => {
             {isLoading ? (
                 <p className="text-center text-muted-foreground mt-8">Loading users...</p>
             ) : (
-                <DataTable table={table} columns={columns} />
+                <DataTable table={table} />
             )}
         </ListView>
     );
