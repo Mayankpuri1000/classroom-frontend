@@ -3,8 +3,9 @@ export type Subject = {
   name: string;
   code: string;
   description: string;
-  department: string;
+  department?: Department;
   createdAt?: string;
+  updatedAt?: string;
 };
 
 export type ListResponse<T = unknown> = {
@@ -76,6 +77,7 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   email: string;
+  emailVerified: boolean;
   name: string;
   role: UserRole;
   image?: string;
@@ -91,8 +93,11 @@ export type Schedule = {
 
 export type Department = {
   id: number;
+  code: string;
   name: string;
   description: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ClassDetails = {
@@ -120,3 +125,59 @@ export type SignUpPayload = {
   imageCldPubId?: string;
   role: UserRole;
 };
+
+export type Enrollment = {
+  id: number;
+  studentId: string;
+  classId: number;
+  createdAt: string;
+  updatedAt: string;
+  student?: User;
+  class?: ClassDetails;
+};
+
+export type AnalyticsOverview = {
+  totalUsers: number;
+  totalClasses: number;
+  activeClasses: number;
+  totalDepartments: number;
+  totalEnrollments: number;
+};
+
+export type EnrollmentTrend = {
+  date: string;
+  count: number;
+};
+
+export type ClassesByDepartment = {
+  departmentName: string;
+  classCount: number;
+};
+
+export type CapacityStatus = {
+  categories: {
+    available: number;
+    nearFull: number;
+    almostFull: number;
+    full: number;
+  };
+  details: Array<{
+    classId: number;
+    className: string;
+    capacity: number;
+    enrollmentCount: number;
+  }>;
+};
+
+export type UserDistribution = {
+  role: string;
+  count: number;
+};
+
+export type RecentActivity = {
+  type: string;
+  id: number | string;
+  description: string;
+  createdAt: string;
+};
+
